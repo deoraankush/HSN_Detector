@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSN Code Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>HSN Code Predictor</h2>
+        <form action="/predict" method="post">
+            <label for="product_name">Product Name:</label>
+            <input type="text" id="product_name" name="product_name" required>
+
+            <label for="description">Product Description:</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+
+            <input type="submit" value="Predict HSN Code">
+        </form>
+
+        <hr>
+
+        <h2>Bulk HSN Code Prediction</h2>
+        <form action="/bulk_predict" method="post" enctype="multipart/form-data">
+            <label for="csv_file">Upload CSV file:</label> (Download a <a href="/download_sample">sample file</a> to see the required format)
+            <input type="file" id="csv_file" name="csv_file" accept=".csv" required>
+            <br><br>
+            <input type="submit" value="Predict HSN for CSV">
+        </form>
+
+        {% if result %}
+        <div class="result">
+            <h3>Prediction Result</h3>
+            <p><strong>HSN Code:</strong> {{ result.hsn_code }}</p>
+            <p><strong>Confidence:</strong> {{ result.confidence_score }}</p>
+            <p><strong>Explanation:</strong> {{ result.explanation }}</p>
+            <h4>Similar Products:</h4>
+            <ul>
+                {% for product in result.similar_products %}
+                <li>{{ product.name }} - HSN: {{ product.hsn }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
