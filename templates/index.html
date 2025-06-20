@@ -39,7 +39,13 @@
 
             <label for="description">Product Description:</label>
             <textarea id="description" name="description" rows="4" required></textarea>
-
+            <br><br>
+            <label for="region">Region:</label>
+            <input type="radio" id="india" name="region" value="India" checked>
+            <label for="india">India</label>
+            <input type="radio" id="international" name="region" value="International">
+            <label for="international">International</label>
+            <br><br>
             <input type="submit" value="Predict HSN Code">
         </form>
 
@@ -47,7 +53,7 @@
 
         <h2>Bulk HSN Code Prediction</h2>
         <form action="/bulk_predict" method="post" enctype="multipart/form-data">
-            <label for="csv_file">Upload CSV file:</label> (Download a <a href="/download_sample">sample file</a> to see the required format)
+            <label for="csv_file">Upload CSV file:</label> (The CSV must contain `product_name`, `description`, and `region` columns. Download a <a href="/download_sample">sample file</a> to see the format.)
             <input type="file" id="csv_file" name="csv_file" accept=".csv" required>
             <br><br>
             <input type="submit" value="Predict HSN for CSV">
@@ -70,3 +76,5 @@
     </div>
 </body>
 </html>
+
+
